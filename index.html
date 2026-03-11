@@ -275,17 +275,18 @@
         .btn-download svg { width: 22px; height: 22px; }
 
         .hero-sub {
-            margin-top: 1rem;
-            font-size: 0.9rem;
-            color: var(--blue-pale);
-            opacity: 0.8;
-            animation: fadeInUp 0.8s ease-out 0.6s both;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+            color: var(--white);
+            opacity: 0.9;
+            animation: fadeInUp 0.8s ease-out 0.45s both;
             letter-spacing: 0.5px;
+            font-weight: 500;
         }
 
-        .hero-sub span {
-            margin: 0 0.4rem;
-            opacity: 0.5;
+        .hero-sub .dot {
+            margin: 0 0.5rem;
+            opacity: 0.4;
         }
 
         @keyframes fadeInUp {
@@ -538,17 +539,18 @@
             </span>
         </div>
 
+        <p class="hero-sub">
+            <span data-i18n="subFree">Free</span>
+            <span class="dot">&middot;</span>
+            <span data-i18n="subNoAccount">No account required</span>
+            <span class="dot">&middot;</span>
+            ~200 MB
+        </p>
+
         <a href="https://github.com/asferrer/OceanguardAI/releases/latest" class="btn-download">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             <span data-i18n="btnDownload">Download APK</span>
         </a>
-        <p class="hero-sub">
-            <span data-i18n="subFree">Free</span>
-            <span>&middot;</span>
-            <span data-i18n="subNoAccount">No account required</span>
-            <span>&middot;</span>
-            ~200 MB
-        </p>
     </div>
 </section>
 
