@@ -582,6 +582,67 @@
 
         .privacy-content strong { color: var(--text-primary); font-weight: 600; }
 
+        /* ── Research Section ── */
+        .research { background: transparent; }
+
+        .research-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .research-item {
+            display: flex;
+            gap: 1.25rem;
+            align-items: flex-start;
+            padding: 1.25rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            transition: border-color 0.3s, transform 0.3s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .research-item:hover {
+            border-color: var(--border-glow);
+            transform: translateY(-2px);
+        }
+
+        .research-tag {
+            flex-shrink: 0;
+            padding: 0.3rem 0.7rem;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .research-tag.paper { background: rgba(139, 92, 246, 0.15); color: var(--accent-purple); }
+        .research-tag.hackathon { background: rgba(245, 158, 11, 0.15); color: var(--accent-amber); }
+        .research-tag.thesis { background: rgba(0, 212, 255, 0.15); color: var(--accent-cyan); }
+
+        .research-info h4 {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+            line-height: 1.4;
+        }
+
+        .research-info p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            line-height: 1.5;
+        }
+
         /* ── CTA Section ── */
         .cta {
             text-align: center;
@@ -845,6 +906,59 @@
     </div>
 </section>
 
+<div class="section-divider"></div>
+
+<!-- ════ Research ════ -->
+<section class="research" id="research">
+    <div class="container">
+        <span class="section-label reveal" data-i18n="researchLabel">Academic Foundation</span>
+        <h2 class="section-title reveal" data-i18n="researchTitle">Research & Publications</h2>
+        <p class="section-subtitle reveal" data-i18n="researchSubtitle">OceanGuard AI is built on peer-reviewed research and ongoing doctoral work on computer vision for marine conservation.</p>
+
+        <div class="research-list">
+            <a href="https://www.sciencedirect.com/science/article/pii/S0167865522003889" target="_blank" rel="noopener" class="research-item reveal">
+                <span class="research-tag paper" data-i18n="tagPaper">Paper</span>
+                <div class="research-info">
+                    <h4>An experimental study on marine debris location and recognition using object detection</h4>
+                    <p>A. S&aacute;nchez-Ferrer, J.J. Valero-Mas, A.J. Gallego, J. Calvo-Zaragoza &mdash; Pattern Recognition Letters, 2023</p>
+                </div>
+            </a>
+
+            <a href="https://link.springer.com/chapter/10.1007/978-3-031-04881-4_49" target="_blank" rel="noopener" class="research-item reveal">
+                <span class="research-tag paper" data-i18n="tagPaper">Paper</span>
+                <div class="research-info">
+                    <h4>The CleanSea Set: A Benchmark Corpus for Underwater Debris Detection and Recognition</h4>
+                    <p>A. S&aacute;nchez-Ferrer, A.J. Gallego, J.J. Valero-Mas, J. Calvo-Zaragoza &mdash; IbPRIA 2022, LNCS Springer</p>
+                </div>
+            </a>
+
+            <a href="https://www.kaggle.com/competitions/google-gemma-3n-hackathon/writeups/oceanguard-ai-mapping-and-mitigating-marine-pollut" target="_blank" rel="noopener" class="research-item reveal">
+                <span class="research-tag hackathon">Hackathon</span>
+                <div class="research-info">
+                    <h4>OceanGuard AI: Mapping and Mitigating Marine Pollution with Gemma 3N</h4>
+                    <p>Google Gemma 3N Hackathon &mdash; Kaggle, 2025</p>
+                </div>
+            </a>
+
+            <a href="https://rua.ua.es/entities/publication/88244474-6165-4cd9-a4af-68eff29d65c6" target="_blank" rel="noopener" class="research-item reveal">
+                <span class="research-tag thesis" data-i18n="tagThesis">Thesis</span>
+                <div class="research-info">
+                    <h4 data-i18n="thesisMaster">Modelos de difusi&oacute;n aplicados a la detecci&oacute;n de objetos en el fondo marino</h4>
+                    <p data-i18n="thesisMasterDesc">A. S&aacute;nchez-Ferrer &mdash; Master's Thesis, Universidad de Alicante, 2024</p>
+                </div>
+            </a>
+
+            <a href="https://rua.ua.es/entities/publication/92c34588-9842-4ec3-8b15-97a8ce718e04" target="_blank" rel="noopener" class="research-item reveal">
+                <span class="research-tag thesis" data-i18n="tagThesis">Thesis</span>
+                <div class="research-info">
+                    <h4 data-i18n="thesisBachelor">Deep Learning aplicado a la detecci&oacute;n de residuos en el fondo marino</h4>
+                    <p data-i18n="thesisBachelorDesc">A. S&aacute;nchez-Ferrer &mdash; Bachelor's Thesis, Universidad de Alicante, 2021</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
 <!-- ════ CTA ════ -->
 <section class="cta">
     <h2 class="reveal" data-i18n="ctaTitle">Ready to protect the ocean?</h2>
@@ -857,7 +971,7 @@
 
 <!-- ════ Footer ════ -->
 <footer>
-    <p data-i18n="footerText">OceanGuard AI &mdash; Part of a doctoral research project on AI-powered marine conservation.</p>
+    <p data-i18n="footerText">OceanGuard AI &mdash; Doctoral research on computer vision for marine debris detection, Universidad de Alicante.</p>
     <p style="margin-top: 0.5rem;">
         <a href="https://github.com/asferrer/OceanguardAI/releases" data-i18n="footerReleases">All releases</a>
         &nbsp;&middot;&nbsp;
@@ -904,7 +1018,16 @@ const i18n = {
         privacy2: 'Camera images, GPS coordinates, and detection results are <strong>stored locally</strong> and can be deleted at any time from within the app.',
         ctaTitle: "Ready to protect the ocean?",
         ctaDesc: "Download OceanGuard AI and start detecting marine debris today.",
-        footerText: "OceanGuard AI &mdash; Part of a doctoral research project on AI-powered marine conservation.",
+        researchLabel: "Academic Foundation",
+        researchTitle: "Research & Publications",
+        researchSubtitle: "OceanGuard AI is built on peer-reviewed research and ongoing doctoral work on computer vision for marine conservation.",
+        tagPaper: "Paper",
+        tagThesis: "Thesis",
+        thesisMaster: "Diffusion models applied to seabed object detection",
+        thesisMasterDesc: "A. S\u00e1nchez-Ferrer \u2014 Master's Thesis, Universidad de Alicante, 2024",
+        thesisBachelor: "Deep Learning applied to seabed debris detection",
+        thesisBachelorDesc: "A. S\u00e1nchez-Ferrer \u2014 Bachelor's Thesis, Universidad de Alicante, 2021",
+        footerText: "OceanGuard AI \u2014 Doctoral research on computer vision for marine debris detection, Universidad de Alicante.",
         footerReleases: "All releases"
     },
     es: {
@@ -944,7 +1067,16 @@ const i18n = {
         privacy2: 'Las im\u00e1genes, coordenadas GPS y resultados de detecci\u00f3n se <strong>almacenan localmente</strong> y pueden eliminarse en cualquier momento desde la app.',
         ctaTitle: "\u00bfListo para proteger el oc\u00e9ano?",
         ctaDesc: "Descarga OceanGuard AI y empieza a detectar residuos marinos hoy.",
-        footerText: "OceanGuard AI &mdash; Parte de un proyecto de investigaci\u00f3n doctoral sobre conservaci\u00f3n marina con IA.",
+        researchLabel: "Base Acad\u00e9mica",
+        researchTitle: "Investigaci\u00f3n y Publicaciones",
+        researchSubtitle: "OceanGuard AI se fundamenta en investigaci\u00f3n revisada por pares y trabajo doctoral en visi\u00f3n por computador para conservaci\u00f3n marina.",
+        tagPaper: "Paper",
+        tagThesis: "Tesis",
+        thesisMaster: "Modelos de difusi\u00f3n aplicados a la detecci\u00f3n de objetos en el fondo marino",
+        thesisMasterDesc: "A. S\u00e1nchez-Ferrer \u2014 Trabajo Fin de M\u00e1ster, Universidad de Alicante, 2024",
+        thesisBachelor: "Deep Learning aplicado a la detecci\u00f3n de residuos en el fondo marino",
+        thesisBachelorDesc: "A. S\u00e1nchez-Ferrer \u2014 Trabajo Fin de Grado, Universidad de Alicante, 2021",
+        footerText: "OceanGuard AI \u2014 Investigaci\u00f3n doctoral en visi\u00f3n por computador para detecci\u00f3n de residuos marinos, Universidad de Alicante.",
         footerReleases: "Todas las releases"
     }
 };
