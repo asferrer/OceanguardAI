@@ -8,7 +8,7 @@
     <meta property="og:title" content="OceanGuard AI">
     <meta property="og:description" content="On-device marine debris detection for Android. 100% offline and private.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://asferrer.github.io/OceanguardAI-Releases">
+    <meta property="og:url" content="https://asferrer.github.io/OceanguardAI">
     <link rel="icon" type="image/png" href="assets/icon.png">
     <style>
         /* ── Reset & Base ── */
@@ -23,10 +23,8 @@
             --blue-bg: #E8F4FD;
             --orange: #F0A500;
             --orange-dark: #E8891C;
-            --green: #3DDC84;
             --white: #FFFFFF;
             --gray-50: #F8FAFC;
-            --gray-100: #F1F5F9;
             --gray-200: #E2E8F0;
             --gray-400: #94A3B8;
             --gray-600: #475569;
@@ -43,6 +41,59 @@
             overflow-x: hidden;
         }
 
+        /* ── Language Toggle ── */
+        .lang-toggle {
+            position: fixed;
+            top: 1.25rem;
+            right: 1.25rem;
+            z-index: 100;
+            display: flex;
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 24px;
+            padding: 3px;
+            gap: 2px;
+        }
+
+        .lang-btn {
+            padding: 0.35rem 0.8rem;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s;
+            background: transparent;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .lang-btn.active {
+            background: var(--white);
+            color: var(--navy-mid);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .lang-btn:not(.active):hover {
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* When scrolled past hero, dark style */
+        .lang-toggle.scrolled {
+            background: rgba(255,255,255,0.95);
+            border-color: var(--gray-200);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+
+        .lang-toggle.scrolled .lang-btn {
+            color: var(--gray-400);
+        }
+
+        .lang-toggle.scrolled .lang-btn.active {
+            background: var(--navy-mid);
+            color: var(--white);
+        }
+
         /* ── Hero Section ── */
         .hero {
             position: relative;
@@ -57,6 +108,7 @@
             overflow: hidden;
         }
 
+        /* White wave transition at bottom */
         .hero::before {
             content: '';
             position: absolute;
@@ -64,11 +116,12 @@
             left: 0;
             right: 0;
             height: 120px;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 120'%3E%3Cpath fill='%23ffffff' d='M0,64L48,69.3C96,75,192,85,288,80C384,75,480,53,576,48C672,43,768,53,864,64C960,75,1056,85,1152,80C1248,75,1344,53,1392,42.7L1440,32L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z'/%3E%3C/svg%3E") no-repeat bottom;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 120'%3E%3Cpath fill='%23F8FAFC' d='M0,64L48,69.3C96,75,192,85,288,80C384,75,480,53,576,48C672,43,768,53,864,64C960,75,1056,85,1152,80C1248,75,1344,53,1392,42.7L1440,32L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z'/%3E%3C/svg%3E") no-repeat bottom;
             background-size: cover;
+            z-index: 2;
         }
 
-        /* Animated wave */
+        /* Animated waves */
         .wave {
             position: absolute;
             bottom: 60px;
@@ -76,8 +129,9 @@
             width: 200%;
             height: 80px;
             opacity: 0.08;
-            animation: wave 8s linear infinite;
+            animation: waveMove 8s linear infinite;
             background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60'%3E%3Cpath fill='%2389CFF0' d='M0,30 Q360,0 720,30 Q1080,60 1440,30 L1440,60 L0,60Z'/%3E%3C/svg%3E") repeat-x;
+            z-index: 1;
         }
 
         .wave:nth-child(2) {
@@ -87,7 +141,7 @@
             animation-direction: reverse;
         }
 
-        @keyframes wave {
+        @keyframes waveMove {
             from { transform: translateX(0); }
             to { transform: translateX(-50%); }
         }
@@ -98,6 +152,7 @@
             inset: 0;
             pointer-events: none;
             overflow: hidden;
+            z-index: 1;
         }
 
         .bubble {
@@ -105,7 +160,7 @@
             border-radius: 50%;
             background: var(--blue-soft);
             opacity: 0;
-            animation: float 10s ease-in infinite;
+            animation: bubbleFloat 10s ease-in infinite;
         }
 
         .bubble:nth-child(1) { width: 12px; height: 12px; left: 10%; animation-delay: 0s; animation-duration: 9s; }
@@ -115,11 +170,20 @@
         .bubble:nth-child(5) { width: 14px; height: 14px; left: 85%; animation-delay: 3s; animation-duration: 10s; }
         .bubble:nth-child(6) { width: 9px; height: 9px; left: 40%; animation-delay: 5s; animation-duration: 9s; }
 
-        @keyframes float {
+        @keyframes bubbleFloat {
             0% { bottom: -20px; opacity: 0; }
             10% { opacity: 0.15; }
             90% { opacity: 0.08; }
             100% { bottom: 100%; opacity: 0; }
+        }
+
+        /* Hero content — above decorations */
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .hero-logo {
@@ -128,7 +192,7 @@
             border-radius: 32px;
             margin-bottom: 1.5rem;
             filter: drop-shadow(0 8px 32px rgba(0,0,0,0.3));
-            animation: fadeInUp 0.8s ease-out;
+            animation: fadeInUp 0.8s ease-out both;
             background: white;
             padding: 12px;
         }
@@ -151,7 +215,7 @@
             animation: fadeInUp 0.8s ease-out 0.2s both;
         }
 
-        .hero p {
+        .hero-desc {
             font-size: clamp(1rem, 2.5vw, 1.25rem);
             color: var(--blue-pale);
             max-width: 500px;
@@ -201,7 +265,6 @@
             transition: transform 0.2s, box-shadow 0.2s;
             box-shadow: 0 4px 24px rgba(240, 165, 0, 0.4);
             animation: fadeInUp 0.8s ease-out 0.5s both;
-            z-index: 1;
         }
 
         .btn-download:hover {
@@ -213,11 +276,16 @@
 
         .hero-sub {
             margin-top: 1rem;
-            font-size: 0.85rem;
-            color: var(--blue-soft);
-            opacity: 0.7;
+            font-size: 0.9rem;
+            color: var(--blue-pale);
+            opacity: 0.8;
             animation: fadeInUp 0.8s ease-out 0.6s both;
-            z-index: 1;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-sub span {
+            margin: 0 0.4rem;
+            opacity: 0.5;
         }
 
         @keyframes fadeInUp {
@@ -226,9 +294,7 @@
         }
 
         /* ── Section Layout ── */
-        section {
-            padding: 5rem 2rem;
-        }
+        section { padding: 5rem 2rem; }
 
         .container {
             max-width: 960px;
@@ -253,9 +319,7 @@
         }
 
         /* ── Features Grid ── */
-        .features {
-            background: var(--gray-50);
-        }
+        .features { background: var(--gray-50); }
 
         .features-grid {
             display: grid;
@@ -288,7 +352,6 @@
         }
 
         .feature-icon svg { width: 24px; height: 24px; }
-
         .feature-icon.blue { background: var(--blue-bg); color: var(--navy-mid); }
         .feature-icon.orange { background: #FFF3D6; color: var(--orange-dark); }
         .feature-icon.green { background: #E6F9EF; color: #059669; }
@@ -308,9 +371,7 @@
         }
 
         /* ── Install Section ── */
-        .install {
-            background: var(--white);
-        }
+        .install { background: var(--white); }
 
         .steps {
             display: flex;
@@ -347,6 +408,7 @@
         }
 
         .step-text strong { color: var(--navy-mid); }
+        .step-text a { color: var(--navy-mid); }
 
         .note-box {
             max-width: 640px;
@@ -360,9 +422,7 @@
         }
 
         /* ── Privacy Section ── */
-        .privacy {
-            background: var(--gray-50);
-        }
+        .privacy { background: var(--gray-50); }
 
         .privacy-content {
             text-align: center;
@@ -409,9 +469,7 @@
             margin-bottom: 2rem;
         }
 
-        .cta .btn-download {
-            animation: none;
-        }
+        .cta .btn-download { animation: none; }
 
         /* ── Footer ── */
         footer {
@@ -434,108 +492,119 @@
             .features-grid { grid-template-columns: 1fr; }
             .hero-badges { gap: 0.5rem; }
             .badge { font-size: 0.75rem; padding: 0.3rem 0.7rem; }
+            .lang-toggle { top: 0.75rem; right: 0.75rem; }
         }
     </style>
 </head>
 <body>
 
+<!-- ── Language Toggle ── -->
+<div class="lang-toggle" id="langToggle">
+    <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" data-lang="es" onclick="setLang('es')">ES</button>
+</div>
+
 <!-- ════ Hero ════ -->
 <section class="hero">
     <div class="bubbles">
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
+        <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+        <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
     </div>
     <div class="wave"></div>
     <div class="wave"></div>
 
-    <img src="assets/logo.png" alt="OceanGuard AI" class="hero-logo">
-    <h1>OceanGuard AI</h1>
-    <div class="hero-accent"></div>
-    <p>On-device marine debris detection for Android. 100% offline and private.</p>
+    <div class="hero-content">
+        <img src="assets/logo.png" alt="OceanGuard AI" class="hero-logo">
+        <h1>OceanGuard AI</h1>
+        <div class="hero-accent"></div>
+        <p class="hero-desc" data-i18n="heroDesc">On-device marine debris detection for Android. 100% offline and private.</p>
 
-    <div class="hero-badges">
-        <span class="badge">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            100% Offline
-        </span>
-        <span class="badge">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg>
-            Android 8.0+
-        </span>
-        <span class="badge">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-            AI-Powered
-        </span>
-        <span class="badge">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-            6 Languages
-        </span>
+        <div class="hero-badges">
+            <span class="badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span data-i18n="badgeOffline">100% Offline</span>
+            </span>
+            <span class="badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg>
+                Android 8.0+
+            </span>
+            <span class="badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                <span data-i18n="badgeAI">AI-Powered</span>
+            </span>
+            <span class="badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                <span data-i18n="badgeLangs">6 Languages</span>
+            </span>
+        </div>
+
+        <a href="https://github.com/asferrer/OceanguardAI/releases/latest" class="btn-download">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span data-i18n="btnDownload">Download APK</span>
+        </a>
+        <p class="hero-sub">
+            <span data-i18n="subFree">Free</span>
+            <span>&middot;</span>
+            <span data-i18n="subNoAccount">No account required</span>
+            <span>&middot;</span>
+            ~200 MB
+        </p>
     </div>
-
-    <a href="https://github.com/asferrer/OceanguardAI-Releases/releases/latest" class="btn-download">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Download APK
-    </a>
-    <p class="hero-sub">Free &middot; No account required &middot; ~200 MB</p>
 </section>
 
 <!-- ════ Features ════ -->
 <section class="features" id="features">
     <div class="container">
-        <h2 class="section-title">Features</h2>
-        <p class="section-subtitle">Everything you need for marine debris monitoring, running entirely on your device.</p>
+        <h2 class="section-title" data-i18n="featuresTitle">Features</h2>
+        <p class="section-subtitle" data-i18n="featuresSubtitle">Everything you need for marine debris monitoring, running entirely on your device.</p>
 
         <div class="features-grid">
             <div class="feature-card">
                 <div class="feature-icon blue">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
                 </div>
-                <h3>Real-Time Detection</h3>
-                <p>Point your camera at marine debris and get instant classification results on screen.</p>
+                <h3 data-i18n="feat1Title">Real-Time Detection</h3>
+                <p data-i18n="feat1Desc">Point your camera at marine debris and get instant classification results on screen.</p>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon orange">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
                 </div>
-                <h3>Batch Analysis</h3>
-                <p>Analyze multiple images at once from your gallery. Ideal for field survey sessions.</p>
+                <h3 data-i18n="feat2Title">Batch Analysis</h3>
+                <p data-i18n="feat2Desc">Analyze multiple images at once from your gallery. Ideal for field survey sessions.</p>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon purple">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
                 </div>
-                <h3>AI Deep Analysis</h3>
-                <p>Optional advanced model for detailed environmental reports and risk assessment.</p>
+                <h3 data-i18n="feat3Title">AI Deep Analysis</h3>
+                <p data-i18n="feat3Desc">Optional advanced model for detailed environmental reports and risk assessment.</p>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon green">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                 </div>
-                <h3>GPS Mapping</h3>
-                <p>Geotag your detections automatically and visualize them on an interactive map.</p>
+                <h3 data-i18n="feat4Title">GPS Mapping</h3>
+                <p data-i18n="feat4Desc">Geotag your detections automatically and visualize them on an interactive map.</p>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon blue">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
                 </div>
-                <h3>PDF Reports</h3>
-                <p>Generate detailed analysis reports and export them as PDF for sharing or archiving.</p>
+                <h3 data-i18n="feat5Title">PDF Reports</h3>
+                <p data-i18n="feat5Desc">Generate detailed analysis reports and export them as PDF for sharing or archiving.</p>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon orange">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                 </div>
-                <h3>MarineDex & Achievements</h3>
-                <p>Collect debris types, track your contributions and unlock achievements.</p>
+                <h3 data-i18n="feat6Title">MarineDex & Achievements</h3>
+                <p data-i18n="feat6Desc">Collect debris types, track your contributions and unlock achievements.</p>
             </div>
         </div>
     </div>
@@ -544,31 +613,31 @@
 <!-- ════ Installation ════ -->
 <section class="install" id="install">
     <div class="container">
-        <h2 class="section-title">Installation</h2>
-        <p class="section-subtitle">Get started in under a minute. No account or app store required.</p>
+        <h2 class="section-title" data-i18n="installTitle">Installation</h2>
+        <p class="section-subtitle" data-i18n="installSubtitle">Get started in under a minute. No account or app store required.</p>
 
         <div class="steps">
             <div class="step">
                 <div class="step-number">1</div>
-                <div class="step-text">Download the latest <strong>APK</strong> from the <a href="https://github.com/asferrer/OceanguardAI-Releases/releases/latest">releases page</a></div>
+                <div class="step-text" data-i18n-html="step1">Download the latest <strong>APK</strong> from the <a href="https://github.com/asferrer/OceanguardAI/releases/latest">releases page</a></div>
             </div>
             <div class="step">
                 <div class="step-number">2</div>
-                <div class="step-text">On your Android device: <strong>Settings &gt; Apps &gt; ⋯ &gt; Special access &gt; Install unknown apps</strong></div>
+                <div class="step-text" data-i18n-html="step2">On your Android device: <strong>Settings &gt; Apps &gt; &#x22EF; &gt; Special access &gt; Install unknown apps</strong></div>
             </div>
             <div class="step">
                 <div class="step-number">3</div>
-                <div class="step-text">Enable installation for your browser (Chrome, Firefox, etc.)</div>
+                <div class="step-text" data-i18n="step3">Enable installation for your browser (Chrome, Firefox, etc.)</div>
             </div>
             <div class="step">
                 <div class="step-number">4</div>
-                <div class="step-text">Open the downloaded APK and tap <strong>Install</strong></div>
+                <div class="step-text" data-i18n-html="step4">Open the downloaded APK and tap <strong>Install</strong></div>
             </div>
         </div>
 
-        <div class="note-box">
-            Google Play Protect may show a warning — this is normal for apps distributed outside the Play Store.
-            Tap <strong>"Install anyway"</strong> to proceed. The app is signed with a developer certificate and is safe to install.
+        <div class="note-box" data-i18n-html="noteBox">
+            Google Play Protect may show a warning &mdash; this is normal for apps distributed outside the Play Store.
+            Tap <strong>&ldquo;Install anyway&rdquo;</strong> to proceed. The app is signed with a developer certificate and is safe to install.
         </div>
     </div>
 </section>
@@ -580,33 +649,144 @@
             <div class="privacy-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             </div>
-            <h2 class="section-title">Your Privacy, Guaranteed</h2>
+            <h2 class="section-title" data-i18n="privacyTitle">Your Privacy, Guaranteed</h2>
             <br>
-            <p>All processing happens <strong>entirely on your device</strong>. No data is collected, transmitted, or shared with any server.</p>
-            <p>Camera images, GPS coordinates, and detection results are <strong>stored locally</strong> and can be deleted at any time from within the app.</p>
+            <p data-i18n-html="privacy1">All processing happens <strong>entirely on your device</strong>. No data is collected, transmitted, or shared with any server.</p>
+            <p data-i18n-html="privacy2">Camera images, GPS coordinates, and detection results are <strong>stored locally</strong> and can be deleted at any time from within the app.</p>
         </div>
     </div>
 </section>
 
 <!-- ════ CTA ════ -->
 <section class="cta">
-    <h2>Ready to protect the ocean?</h2>
-    <p>Download OceanGuard AI and start detecting marine debris today.</p>
-    <a href="https://github.com/asferrer/OceanguardAI-Releases/releases/latest" class="btn-download">
+    <h2 data-i18n="ctaTitle">Ready to protect the ocean?</h2>
+    <p data-i18n="ctaDesc">Download OceanGuard AI and start detecting marine debris today.</p>
+    <a href="https://github.com/asferrer/OceanguardAI/releases/latest" class="btn-download">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Download APK
+        <span data-i18n="btnDownload">Download APK</span>
     </a>
 </section>
 
 <!-- ════ Footer ════ -->
 <footer>
-    <p>OceanGuard AI &mdash; Part of a doctoral research project on AI-powered marine conservation.</p>
+    <p data-i18n="footerText">OceanGuard AI &mdash; Part of a doctoral research project on AI-powered marine conservation.</p>
     <p style="margin-top: 0.5rem;">
-        <a href="https://github.com/asferrer/OceanguardAI-Releases/releases">All releases</a>
+        <a href="https://github.com/asferrer/OceanguardAI/releases" data-i18n="footerReleases">All releases</a>
         &nbsp;&middot;&nbsp;
         <a href="https://github.com/asferrer">GitHub</a>
     </p>
 </footer>
+
+<script>
+const i18n = {
+    en: {
+        heroDesc: "On-device marine debris detection for Android. 100% offline and private.",
+        badgeOffline: "100% Offline",
+        badgeAI: "AI-Powered",
+        badgeLangs: "6 Languages",
+        btnDownload: "Download APK",
+        subFree: "Free",
+        subNoAccount: "No account required",
+        featuresTitle: "Features",
+        featuresSubtitle: "Everything you need for marine debris monitoring, running entirely on your device.",
+        feat1Title: "Real-Time Detection",
+        feat1Desc: "Point your camera at marine debris and get instant classification results on screen.",
+        feat2Title: "Batch Analysis",
+        feat2Desc: "Analyze multiple images at once from your gallery. Ideal for field survey sessions.",
+        feat3Title: "AI Deep Analysis",
+        feat3Desc: "Optional advanced model for detailed environmental reports and risk assessment.",
+        feat4Title: "GPS Mapping",
+        feat4Desc: "Geotag your detections automatically and visualize them on an interactive map.",
+        feat5Title: "PDF Reports",
+        feat5Desc: "Generate detailed analysis reports and export them as PDF for sharing or archiving.",
+        feat6Title: "MarineDex & Achievements",
+        feat6Desc: "Collect debris types, track your contributions and unlock achievements.",
+        installTitle: "Installation",
+        installSubtitle: "Get started in under a minute. No account or app store required.",
+        step1: 'Download the latest <strong>APK</strong> from the <a href="https://github.com/asferrer/OceanguardAI/releases/latest">releases page</a>',
+        step2: 'On your Android device: <strong>Settings &gt; Apps &gt; &#x22EF; &gt; Special access &gt; Install unknown apps</strong>',
+        step3: "Enable installation for your browser (Chrome, Firefox, etc.)",
+        step4: 'Open the downloaded APK and tap <strong>Install</strong>',
+        noteBox: 'Google Play Protect may show a warning &mdash; this is normal for apps distributed outside the Play Store. Tap <strong>&ldquo;Install anyway&rdquo;</strong> to proceed. The app is signed with a developer certificate and is safe to install.',
+        privacyTitle: "Your Privacy, Guaranteed",
+        privacy1: 'All processing happens <strong>entirely on your device</strong>. No data is collected, transmitted, or shared with any server.',
+        privacy2: 'Camera images, GPS coordinates, and detection results are <strong>stored locally</strong> and can be deleted at any time from within the app.',
+        ctaTitle: "Ready to protect the ocean?",
+        ctaDesc: "Download OceanGuard AI and start detecting marine debris today.",
+        footerText: "OceanGuard AI &mdash; Part of a doctoral research project on AI-powered marine conservation.",
+        footerReleases: "All releases"
+    },
+    es: {
+        heroDesc: "Detecci\u00f3n de residuos marinos en tu dispositivo Android. 100% sin conexi\u00f3n y privado.",
+        badgeOffline: "100% Sin conexi\u00f3n",
+        badgeAI: "Con IA",
+        badgeLangs: "6 Idiomas",
+        btnDownload: "Descargar APK",
+        subFree: "Gratis",
+        subNoAccount: "Sin cuenta necesaria",
+        featuresTitle: "Funcionalidades",
+        featuresSubtitle: "Todo lo que necesitas para monitorizar residuos marinos, ejecut\u00e1ndose completamente en tu dispositivo.",
+        feat1Title: "Detecci\u00f3n en Tiempo Real",
+        feat1Desc: "Apunta tu c\u00e1mara hacia residuos marinos y obt\u00e9n resultados de clasificaci\u00f3n instant\u00e1neos.",
+        feat2Title: "An\u00e1lisis por Lotes",
+        feat2Desc: "Analiza m\u00faltiples im\u00e1genes de tu galer\u00eda a la vez. Ideal para sesiones de campo.",
+        feat3Title: "An\u00e1lisis Profundo con IA",
+        feat3Desc: "Modelo avanzado opcional para informes medioambientales detallados y evaluaci\u00f3n de riesgos.",
+        feat4Title: "Mapa GPS",
+        feat4Desc: "Geoetiqueta tus detecciones autom\u00e1ticamente y visual\u00edzalas en un mapa interactivo.",
+        feat5Title: "Informes PDF",
+        feat5Desc: "Genera informes de an\u00e1lisis detallados y exp\u00f3rtalos como PDF para compartir o archivar.",
+        feat6Title: "MarineDex y Logros",
+        feat6Desc: "Colecciona tipos de residuos, rastrea tus contribuciones y desbloquea logros.",
+        installTitle: "Instalaci\u00f3n",
+        installSubtitle: "Empieza en menos de un minuto. Sin cuenta ni tienda de aplicaciones.",
+        step1: 'Descarga el \u00faltimo <strong>APK</strong> desde la <a href="https://github.com/asferrer/OceanguardAI/releases/latest">p\u00e1gina de releases</a>',
+        step2: 'En tu dispositivo Android: <strong>Ajustes &gt; Apps &gt; &#x22EF; &gt; Acceso especial &gt; Instalar apps desconocidas</strong>',
+        step3: "Habilita la instalaci\u00f3n para tu navegador (Chrome, Firefox, etc.)",
+        step4: 'Abre el APK descargado y pulsa <strong>Instalar</strong>',
+        noteBox: 'Google Play Protect puede mostrar una advertencia &mdash; esto es normal para apps distribuidas fuera de la Play Store. Pulsa <strong>&ldquo;Instalar de todos modos&rdquo;</strong> para continuar. La app est\u00e1 firmada con un certificado de desarrollador y es segura.',
+        privacyTitle: "Tu Privacidad, Garantizada",
+        privacy1: 'Todo el procesamiento ocurre <strong>completamente en tu dispositivo</strong>. No se recopilan, transmiten ni comparten datos con ning\u00fan servidor.',
+        privacy2: 'Las im\u00e1genes, coordenadas GPS y resultados de detecci\u00f3n se <strong>almacenan localmente</strong> y pueden eliminarse en cualquier momento desde la app.',
+        ctaTitle: "\u00bfListo para proteger el oc\u00e9ano?",
+        ctaDesc: "Descarga OceanGuard AI y empieza a detectar residuos marinos hoy.",
+        footerText: "OceanGuard AI &mdash; Parte de un proyecto de investigaci\u00f3n doctoral sobre conservaci\u00f3n marina con IA.",
+        footerReleases: "Todas las releases"
+    }
+};
+
+let currentLang = (navigator.language || '').startsWith('es') ? 'es' : 'en';
+
+function setLang(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+    const strings = i18n[lang];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (strings[key]) el.textContent = strings[key];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const key = el.getAttribute('data-i18n-html');
+        if (strings[key]) el.innerHTML = strings[key];
+    });
+    localStorage.setItem('oceanguard-lang', lang);
+}
+
+// Scroll detection for lang toggle style
+const langToggle = document.getElementById('langToggle');
+const hero = document.querySelector('.hero');
+const observer = new IntersectionObserver(([entry]) => {
+    langToggle.classList.toggle('scrolled', !entry.isIntersecting);
+}, { threshold: 0.1 });
+observer.observe(hero);
+
+// Init language
+const saved = localStorage.getItem('oceanguard-lang');
+setLang(saved || currentLang);
+</script>
 
 </body>
 </html>

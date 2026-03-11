@@ -9,8 +9,8 @@
 <h3 align="center">On-device marine debris detection for Android</h3>
 
 <p align="center">
-  <a href="https://github.com/asferrer/OceanguardAI-Releases/releases/latest">
-    <img src="https://img.shields.io/github/v/release/asferrer/OceanguardAI-Releases?style=for-the-badge&color=134074&label=Latest%20Release" alt="Latest Release"/>
+  <a href="https://github.com/asferrer/OceanguardAI/releases/latest">
+    <img src="https://img.shields.io/github/v/release/asferrer/OceanguardAI?style=for-the-badge&color=134074&label=Latest%20Release" alt="Latest Release"/>
   </a>
   &nbsp;
   <img src="https://img.shields.io/badge/Platform-Android%208.0%2B-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android"/>
@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/asferrer/OceanguardAI-Releases/releases/latest">
+  <a href="https://github.com/asferrer/OceanguardAI/releases/latest">
     <img src="https://img.shields.io/badge/DOWNLOAD%20APK-134074?style=for-the-badge&logo=android&logoColor=white" alt="Download APK"/>
   </a>
 </p>
@@ -79,7 +79,7 @@ Part of a doctoral research project on AI-powered marine conservation.
 
 > **Requirements:** Android 8.0 or higher, ~200 MB free storage.
 
-1. Download the latest **APK** from the button above or from the [releases page](https://github.com/asferrer/OceanguardAI-Releases/releases/latest)
+1. Download the latest **APK** from the button above or from the [releases page](https://github.com/asferrer/OceanguardAI/releases/latest)
 2. On your Android device: **Settings > Apps > ⋯ > Special access > Install unknown apps**
 3. Enable installation for your browser
 4. Open the downloaded APK and tap **Install**
