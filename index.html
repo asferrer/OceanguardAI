@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OceanGuard AI — Marine Debris Detection</title>
-    <meta name="description" content="On-device marine debris detection for Android. 100% offline, private, and powered by AI.">
+    <meta name="description" content="Fully offline marine debris intelligence for Android, powered by Gemma 4 E2B. Detect, score and report ocean pollution in six languages — no cloud, no account.">
     <meta property="og:title" content="OceanGuard AI">
-    <meta property="og:description" content="On-device marine debris detection for Android. 100% offline and private.">
+    <meta property="og:description" content="Fully offline marine debris intelligence for Android, powered by Gemma 4 E2B. Detect, score and report ocean pollution in six languages.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://asferrer.github.io/OceanguardAI">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
@@ -482,6 +482,80 @@
             font-weight: 300;
         }
 
+        /* ── Stats Section ── */
+        .stats { background: transparent; }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.25rem;
+            max-width: 1080px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            position: relative;
+            padding: 2rem 1.25rem;
+            border-radius: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            text-align: center;
+            overflow: hidden;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            padding: 1px;
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-emerald) 100%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0.35;
+            transition: opacity 0.35s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-card:hover::before { opacity: 1; }
+
+        .stat-value {
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            font-size: 2.6rem;
+            font-weight: 700;
+            line-height: 1;
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-emerald) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+        }
+
+        .stat-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-top: 0.6rem;
+            letter-spacing: 0.2px;
+        }
+
+        .stat-sub {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 0.35rem;
+            line-height: 1.45;
+            font-weight: 300;
+        }
+
         /* ── Install Section ── */
         .install { background: transparent; }
 
@@ -711,11 +785,16 @@
         /* ── Responsive ── */
         @media (max-width: 900px) {
             .features-grid { grid-template-columns: repeat(2, 1fr); }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .stat-value { font-size: 2.2rem; }
         }
 
         @media (max-width: 640px) {
             section { padding: 4rem 1.25rem; }
             .features-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: 1fr; gap: 0.9rem; }
+            .stat-card { padding: 1.5rem 1rem; }
+            .stat-value { font-size: 2rem; }
             .hero-badges { gap: 0.4rem; }
             .badge { font-size: 0.72rem; padding: 0.35rem 0.75rem; }
             .lang-toggle { top: 0.75rem; right: 0.75rem; }
@@ -756,7 +835,7 @@
         <img src="assets/logo.png" alt="OceanGuard AI" class="hero-logo">
         <h1>OceanGuard AI</h1>
         <div class="hero-accent"></div>
-        <p class="hero-desc" data-i18n="heroDesc">On-device marine debris detection in images and videos for Android. 100% offline and private.</p>
+        <p class="hero-desc" data-i18n="heroDesc">Fully offline marine debris intelligence for Android, powered by Gemma 4 E2B. Detect, score and report ocean pollution in six languages — without leaving your phone.</p>
 
         <div class="hero-badges">
             <span class="badge">
@@ -769,7 +848,7 @@
             </span>
             <span class="badge">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-                <span data-i18n="badgeAI">AI-Powered</span>
+                <span data-i18n="badgeAI">Powered by Gemma 4</span>
             </span>
             <span class="badge">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
@@ -782,7 +861,7 @@
             <span class="dot">&middot;</span>
             <span data-i18n="subNoAccount">No account required</span>
             <span class="dot">&middot;</span>
-            ~200 MB
+            <span data-i18n="subSize">APK ~80 MB + model ~2.6 GB download</span>
         </p>
 
         <a href="https://github.com/asferrer/OceanguardAI/releases/latest/download/OceanGuard-AI-latest.apk" class="btn-download">
@@ -823,7 +902,7 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
                 </div>
                 <h3 data-i18n="feat3Title">AI Deep Analysis</h3>
-                <p data-i18n="feat3Desc">Optional advanced model for detailed environmental reports and risk assessment.</p>
+                <p data-i18n="feat3Desc">Powered by Gemma 4 E2B running fully on-device. Generates grounded, hallucination-free environmental reports with ecosystem health scoring.</p>
             </div>
 
             <div class="feature-card reveal">
@@ -839,7 +918,7 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
                 </div>
                 <h3 data-i18n="feat5Title">PDF Reports</h3>
-                <p data-i18n="feat5Desc">Generate detailed analysis reports and export them as PDF for sharing or archiving.</p>
+                <p data-i18n="feat5Desc">Detailed environmental reports in 6 languages and 3 audience modes (Scientific, NGO, Citizen). Every percentage is traceable. Export as PDF, Markdown or CSV.</p>
             </div>
 
             <div class="feature-card reveal">
@@ -847,7 +926,44 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                 </div>
                 <h3 data-i18n="feat6Title">MarineDex & Achievements</h3>
-                <p data-i18n="feat6Desc">Collect debris types, track your contributions and unlock achievements.</p>
+                <p data-i18n="feat6Desc">Pokédex-style collection of 11 canonical debris families with pixel-art sprites. 24+ achievements across 6 categories keep field work engaging.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ════ Stats ════ -->
+<section class="stats" id="stats">
+    <div class="container">
+        <span class="section-label reveal" data-i18n="statsLabel">By the numbers</span>
+        <h2 class="section-title reveal" data-i18n="statsTitle">Impact at a glance</h2>
+        <p class="section-subtitle reveal" data-i18n="statsSubtitle">Verifiable metrics from the latest fine-tune on a 200-image held-out test set.</p>
+
+        <div class="stats-grid">
+            <div class="stat-card reveal">
+                <div class="stat-value" data-i18n="stat1Value">0.325</div>
+                <div class="stat-label" data-i18n="stat1Label">mAP@0.5</div>
+                <div class="stat-sub" data-i18n="stat1Sub">+252% vs base Gemma 4 E2B</div>
+            </div>
+
+            <div class="stat-card reveal">
+                <div class="stat-value" data-i18n="stat2Value">11</div>
+                <div class="stat-label" data-i18n="stat2Label">canonical classes</div>
+                <div class="stat-sub" data-i18n="stat2Sub">Mapped to 50 fine-grained types</div>
+            </div>
+
+            <div class="stat-card reveal">
+                <div class="stat-value" data-i18n="stat3Value">6 × 3</div>
+                <div class="stat-label" data-i18n="stat3Label">languages × audiences</div>
+                <div class="stat-sub" data-i18n="stat3Sub">18 report variants per analysis</div>
+            </div>
+
+            <div class="stat-card reveal">
+                <div class="stat-value" data-i18n="stat4Value">24+</div>
+                <div class="stat-label" data-i18n="stat4Label">achievements</div>
+                <div class="stat-sub" data-i18n="stat4Sub">Across 6 progression categories</div>
             </div>
         </div>
     </div>
@@ -935,8 +1051,8 @@
             <a href="https://www.kaggle.com/competitions/google-gemma-3n-hackathon/writeups/oceanguard-ai-mapping-and-mitigating-marine-pollut" target="_blank" rel="noopener" class="research-item reveal">
                 <span class="research-tag hackathon">Hackathon</span>
                 <div class="research-info">
-                    <h4>OceanGuard AI: Mapping and Mitigating Marine Pollution with Gemma 3N</h4>
-                    <p>Google Gemma 3N Hackathon &mdash; Kaggle, 2025</p>
+                    <h4>OceanGuard AI: Mapping and Mitigating Marine Pollution</h4>
+                    <p>Kaggle hackathon write-up &mdash; 2025</p>
                 </div>
             </a>
 
@@ -982,13 +1098,14 @@
 <script>
 const i18n = {
     en: {
-        heroDesc: "On-device marine debris detection in images and videos for Android. 100% offline and private.",
+        heroDesc: "Fully offline marine debris intelligence for Android, powered by Gemma 4 E2B. Detect, score and report ocean pollution in six languages — without leaving your phone.",
         badgeOffline: "100% Offline",
-        badgeAI: "AI-Powered",
+        badgeAI: "Powered by Gemma 4",
         badgeLangs: "6 Languages",
         btnDownload: "Download APK",
         subFree: "Free",
         subNoAccount: "No account required",
+        subSize: "APK ~80 MB + model ~2.6 GB download",
         featuresLabel: "Capabilities",
         featuresTitle: "Features",
         featuresSubtitle: "Everything you need for marine debris monitoring, running entirely on your device.",
@@ -997,13 +1114,28 @@ const i18n = {
         feat2Title: "Batch Analysis",
         feat2Desc: "Analyze multiple images and videos at once from your gallery. Ideal for field survey sessions.",
         feat3Title: "AI Deep Analysis",
-        feat3Desc: "Optional advanced model for detailed environmental reports and risk assessment.",
+        feat3Desc: "Powered by Gemma 4 E2B running fully on-device. Generates grounded, hallucination-free environmental reports with ecosystem health scoring.",
         feat4Title: "GPS Mapping",
         feat4Desc: "Geotag your detections automatically and visualize them on an interactive map.",
         feat5Title: "PDF Reports",
-        feat5Desc: "Generate detailed analysis reports and export them as PDF for sharing or archiving.",
+        feat5Desc: "Detailed environmental reports in 6 languages and 3 audience modes (Scientific, NGO, Citizen). Every percentage is traceable. Export as PDF, Markdown or CSV.",
         feat6Title: "MarineDex & Achievements",
-        feat6Desc: "Collect debris types, track your contributions and unlock achievements.",
+        feat6Desc: "Pokédex-style collection of 11 canonical debris families with pixel-art sprites. 24+ achievements across 6 categories keep field work engaging.",
+        statsLabel: "By the numbers",
+        statsTitle: "Impact at a glance",
+        statsSubtitle: "Verifiable metrics from the latest fine-tune on a 200-image held-out test set.",
+        stat1Value: "0.325",
+        stat1Label: "mAP@0.5",
+        stat1Sub: "+252% vs base Gemma 4 E2B",
+        stat2Value: "11",
+        stat2Label: "canonical classes",
+        stat2Sub: "Mapped to 50 fine-grained types",
+        stat3Value: "6 × 3",
+        stat3Label: "languages × audiences",
+        stat3Sub: "18 report variants per analysis",
+        stat4Value: "24+",
+        stat4Label: "achievements",
+        stat4Sub: "Across 6 progression categories",
         installLabel: "Get Started",
         installTitle: "Installation",
         installSubtitle: "Get started in under a minute. No account or app store required.",
@@ -1031,13 +1163,14 @@ const i18n = {
         footerReleases: "All releases"
     },
     es: {
-        heroDesc: "Detecci\u00f3n de residuos marinos en im\u00e1genes y v\u00eddeos en tu dispositivo Android. 100% sin conexi\u00f3n y privado.",
+        heroDesc: "Inteligencia de residuos marinos totalmente sin conexi\u00f3n para Android, impulsada por Gemma 4 E2B. Detecta, puntu\u00faa y reporta la contaminaci\u00f3n del oc\u00e9ano en seis idiomas \u2014 sin salir de tu m\u00f3vil.",
         badgeOffline: "100% Sin conexi\u00f3n",
-        badgeAI: "Con IA",
+        badgeAI: "Impulsado por Gemma 4",
         badgeLangs: "6 Idiomas",
         btnDownload: "Descargar APK",
         subFree: "Gratis",
         subNoAccount: "Sin cuenta necesaria",
+        subSize: "APK ~80 MB + descarga del modelo ~2,6 GB",
         featuresLabel: "Capacidades",
         featuresTitle: "Funcionalidades",
         featuresSubtitle: "Todo lo que necesitas para monitorizar residuos marinos, ejecut\u00e1ndose completamente en tu dispositivo.",
@@ -1046,13 +1179,28 @@ const i18n = {
         feat2Title: "An\u00e1lisis por Lotes",
         feat2Desc: "Analiza m\u00faltiples im\u00e1genes y v\u00eddeos de tu galer\u00eda a la vez. Ideal para sesiones de campo.",
         feat3Title: "An\u00e1lisis Profundo con IA",
-        feat3Desc: "Modelo avanzado opcional para informes medioambientales detallados y evaluaci\u00f3n de riesgos.",
+        feat3Desc: "Impulsado por Gemma 4 E2B ejecut\u00e1ndose totalmente en tu dispositivo. Genera informes medioambientales fundamentados, sin alucinaciones, con puntuaci\u00f3n del estado del ecosistema.",
         feat4Title: "Mapa GPS",
         feat4Desc: "Geoetiqueta tus detecciones autom\u00e1ticamente y visual\u00edzalas en un mapa interactivo.",
         feat5Title: "Informes PDF",
-        feat5Desc: "Genera informes de an\u00e1lisis detallados y exp\u00f3rtalos como PDF para compartir o archivar.",
+        feat5Desc: "Informes ambientales detallados en 6 idiomas y 3 modos de audiencia (Cient\u00edfico, ONG, Ciudadano). Cada porcentaje es trazable. Exporta como PDF, Markdown o CSV.",
         feat6Title: "MarineDex y Logros",
-        feat6Desc: "Colecciona tipos de residuos, rastrea tus contribuciones y desbloquea logros.",
+        feat6Desc: "Colecci\u00f3n estilo Pok\u00e9dex de 11 familias can\u00f3nicas de residuos con sprites pixel-art. M\u00e1s de 24 logros en 6 categor\u00edas mantienen el trabajo de campo motivante.",
+        statsLabel: "En cifras",
+        statsTitle: "Impacto de un vistazo",
+        statsSubtitle: "M\u00e9tricas verificables del \u00faltimo fine-tune sobre un conjunto de prueba reservado de 200 im\u00e1genes.",
+        stat1Value: "0,325",
+        stat1Label: "mAP@0.5",
+        stat1Sub: "+252% respecto a Gemma 4 E2B base",
+        stat2Value: "11",
+        stat2Label: "clases can\u00f3nicas",
+        stat2Sub: "Mapeadas a 50 tipos detallados",
+        stat3Value: "6 \u00d7 3",
+        stat3Label: "idiomas \u00d7 audiencias",
+        stat3Sub: "18 variantes de informe por an\u00e1lisis",
+        stat4Value: "24+",
+        stat4Label: "logros",
+        stat4Sub: "En 6 categor\u00edas de progresi\u00f3n",
         installLabel: "Empezar",
         installTitle: "Instalaci\u00f3n",
         installSubtitle: "Empieza en menos de un minuto. Sin cuenta ni tienda de aplicaciones.",
